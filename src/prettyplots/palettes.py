@@ -1,32 +1,30 @@
-"""Color palettes for prettyplots.
+"""Coquette / neapolitan pastel palette + a single dark, readable outline.
 
-Add your own palettes to the ``PALETTES`` dict. Each palette is just an
-ordered list of hex color strings.
+Colors: warm & cool pinks, lilac purple, four-leaf-clover greens, pastel
+blue, cream, chocolate brown. Tweak freely.
 """
-
 from __future__ import annotations
 
-# A few starter palettes. Feel free to add/replace these.
-PALETTES: dict[str, list[str]] = {
-    "default": ["#4C72B0", "#DD8452", "#55A868", "#C44E52", "#8172B3", "#937860"],
-    "vibrant": ["#EE6677", "#228833", "#4477AA", "#CCBB44", "#66CCEE", "#AA3377"],
-    "pastel": ["#A1C9F4", "#FFB482", "#8DE5A1", "#FF9F9B", "#D0BBFF", "#DEBB9B"],
-}
+FILLS = [
+    "#F4C2D7",  # warm pastel pink
+    "#C9A9E9",  # lilac purple
+    "#A3D9A5",  # four-leaf-clover green
+    "#A7C7E7",  # pastel blue
+    "#F6E7CB",  # cream
+    "#C89F94",  # chocolate-milk brown
+    "#EBB7CE",  # cool rose pink
+    "#B7E4C7",  # mint clover
+]
+EDGE = "#5C4033"   # dark chocolate outline — readable on every fill
+TEXT = "#5A3D4E"   # warm dark mauve for titles & labels
+PAPER = "#FBF3F0"  # soft cream-pink page background
+PANEL = "#FFFBF7"  # near-white plot background (keeps data crisp)
+
+# Native matplotlib hatches that read as cute textures.
+PATTERNS = {"dots": "..", "circles": "oo", "sparkles": "**",
+            "stars": "*", "swirls": "//", "grid": "xx"}
 
 
-def get_palette(name: str = "default") -> list[str]:
-    """Return the list of hex colors for a named palette.
-
-    Parameters
-    ----------
-    name:
-        Key into :data:`PALETTES`.
-
-    Raises
-    ------
-    KeyError
-        If ``name`` is not a known palette.
-    """
-    if name not in PALETTES:
-        raise KeyError(f"Unknown palette {name!r}. Available: {sorted(PALETTES)}")
-    return list(PALETTES[name])
+def get_palette() -> list[str]:
+    """Return a copy of the pastel fill colors."""
+    return list(FILLS)
