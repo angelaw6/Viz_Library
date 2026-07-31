@@ -1,18 +1,28 @@
-"""Quickstart example for prettyplots.
+"""Quickstart for prettyplots — renders a 2x2 showcase.
 
 Run with:  python examples/quickstart.py
-Saves a PNG next to this file.
 """
 
 import numpy as np
 
 import prettyplots as pp
 
-pp.set_theme(palette="vibrant")
+pp.set_theme()
 
-x = np.linspace(0, 2 * np.pi, 100)
-fig, ax = pp.line(x, np.sin(x), label="sin", title="Pretty line plot", xlabel="x", ylabel="y")
-pp.line(x, np.cos(x), label="cos", ax=ax)
+fig, axes = pp.subplots(2, 2, figsize=(9, 6.2))
+cats = ["lily", "rose", "iris", "fern"]
 
-fig.savefig("examples/quickstart.png", dpi=150)
-print("Saved examples/quickstart.png")
+pp.bar(cats, [5, 3, 6, 4], title="Bar", ax=axes[0, 0])
+
+x = np.linspace(-3, 3, 200)
+pp.line(x, np.exp(-x**2) + 0.55 * np.exp(-(x - 1.4)**2 * 5) + 0.1,
+        title="Line", ax=axes[0, 1])
+
+pp.scatter(np.random.default_rng(11).normal(0, 1, 38),
+           np.random.default_rng(3).normal(0, 1, 38), title="Scatter", ax=axes[1, 0])
+
+pp.pie([4, 3, 2, 5], labels=cats, title="Pie", ax=axes[1, 1])
+
+fig.suptitle("prettyplots", fontsize=16, fontweight="bold")
+fig.savefig("examples/showcase.png", dpi=150)
+print("Saved examples/showcase.png")
