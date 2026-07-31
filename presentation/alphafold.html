@@ -1,0 +1,502 @@
+<title>AlphaFold — Presentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<style>
+  :root {
+    /* Google brand */
+    --g-blue:   #4285F4;
+    --g-red:    #EA4335;
+    --g-yellow: #FBBC05;
+    --g-green:  #34A853;
+    --g-blue-d: #1a73e8;
+
+    /* chosen neutrals — cool grey biased toward blue */
+    --ground:   #ffffff;
+    --panel:    #f6f8fc;
+    --panel-2:  #eef2f9;
+    --ink:      #202124;
+    --ink-soft: #3c4043;
+    --muted:    #5f6368;
+    --line:     #dbe1ea;
+    --shadow:   0 1px 2px rgba(60,64,67,.10), 0 8px 28px rgba(60,64,67,.10);
+
+    --maxw: 1120px;
+    --pad: clamp(28px, 5vw, 84px);
+    --sans: "Google Sans", "Product Sans", "Google Sans Text", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground:  #0f1218;
+      --panel:   #171b22;
+      --panel-2: #1e232c;
+      --ink:     #e8eaed;
+      --ink-soft:#c9ccd1;
+      --muted:   #9aa0a6;
+      --line:    #2a2f39;
+      --shadow:  0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.45);
+      --g-blue:  #8ab4f8;
+      --g-blue-d:#8ab4f8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #0f1218; --panel: #171b22; --panel-2: #1e232c;
+    --ink: #e8eaed; --ink-soft:#c9ccd1; --muted: #9aa0a6; --line: #2a2f39;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 34px rgba(0,0,0,.45);
+    --g-blue: #8ab4f8; --g-blue-d:#8ab4f8;
+  }
+  :root[data-theme="light"] {
+    --ground:#fff; --panel:#f6f8fc; --panel-2:#eef2f9;
+    --ink:#202124; --ink-soft:#3c4043; --muted:#5f6368; --line:#dbe1ea;
+    --shadow: 0 1px 2px rgba(60,64,67,.10), 0 8px 28px rgba(60,64,67,.10);
+    --g-blue:#4285F4; --g-blue-d:#1a73e8;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ---------- deck ---------- */
+  .deck { position: fixed; inset: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    display: none;
+    padding: var(--pad);
+    opacity: 0;
+    transition: opacity .38s ease;
+  }
+  .slide.active { display: block; opacity: 1; }
+  .slide .inner {
+    max-width: var(--maxw);
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(14px, 2.4vh, 30px);
+  }
+  .slide.enter .rise { animation: rise .55s cubic-bezier(.2,.7,.2,1) both; }
+  .rise:nth-child(2){ animation-delay: .05s; }
+  .rise:nth-child(3){ animation-delay: .10s; }
+  .rise:nth-child(4){ animation-delay: .15s; }
+  @keyframes rise { from { opacity:0; transform: translateY(14px);} to {opacity:1; transform:none;} }
+  @media (prefers-reduced-motion: reduce){
+    .slide, .rise { transition:none !important; animation:none !important; }
+  }
+
+  /* ---------- type ---------- */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: clamp(11px, 1.3vw, 14px);
+    font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .eyebrow .dot { width:9px; height:9px; border-radius:50%; }
+  h1 {
+    font-size: clamp(46px, 9vw, 118px);
+    line-height: .92; margin: 0; font-weight: 700;
+    letter-spacing: -.03em; text-wrap: balance;
+  }
+  h2 {
+    font-size: clamp(30px, 5.4vw, 62px);
+    line-height: 1.02; margin: 0; font-weight: 700;
+    letter-spacing: -.02em; text-wrap: balance;
+  }
+  .lead { font-size: clamp(18px, 2.5vw, 27px); line-height: 1.32; color: var(--ink-soft); font-weight: 400; max-width: 60ch; margin:0; text-wrap: balance; }
+  .sub  { font-size: clamp(15px, 1.7vw, 19px); line-height: 1.5; color: var(--muted); max-width: 56ch; margin:0; }
+  .accent-blue { color: var(--g-blue-d); }
+  .accent-red  { color: var(--g-red); }
+  .accent-green{ color: var(--g-green); }
+  b, strong { font-weight: 700; }
+
+  .grid2 { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+  @media (max-width: 820px){ .grid2 { grid-template-columns: 1fr; gap: 20px; } }
+
+  /* ---------- title fold ---------- */
+  .title-wrap { display:flex; flex-direction:column; gap: clamp(18px,3vh,30px); }
+  .wordmark { font-weight:700; letter-spacing:-.03em; }
+  .wordmark .a1{color:var(--g-blue);} .wordmark .a2{color:var(--g-red);}
+  .wordmark .a3{color:var(--g-yellow);} .wordmark .a4{color:var(--g-blue);}
+  .wordmark .a5{color:var(--g-green);} .wordmark .a6{color:var(--g-red);}
+  .wordmark .a7{color:var(--g-blue);} .wordmark .a8{color:var(--g-green);}
+  .wordmark .a9{color:var(--g-yellow);}
+
+  /* ---------- stat ---------- */
+  .bignum { font-weight: 700; letter-spacing: -.03em; line-height: .9; font-variant-numeric: tabular-nums; }
+  .stat-row { display:flex; flex-wrap:wrap; gap: clamp(20px,4vw,52px); }
+  .stat { display:flex; flex-direction:column; gap:6px; }
+  .stat .n { font-size: clamp(38px, 6vw, 76px); font-weight:700; letter-spacing:-.03em; line-height:.9; font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: clamp(13px,1.5vw,16px); color: var(--muted); max-width: 22ch; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: clamp(20px, 3vw, 34px);
+    box-shadow: var(--shadow);
+  }
+
+  .chips { display:flex; flex-wrap:wrap; gap:10px; }
+  .chip {
+    font-size: clamp(13px,1.5vw,16px); font-weight:600;
+    padding: 9px 16px; border-radius: 999px;
+    background: var(--panel-2); border:1px solid var(--line); color: var(--ink-soft);
+  }
+  .chip .k { width:9px; height:9px; border-radius:3px; display:inline-block; margin-right:8px; vertical-align: middle; }
+
+  svg { display:block; width:100%; height:auto; overflow: visible; }
+  .visual { width:100%; }
+
+  /* ---------- chrome ---------- */
+  .rail { position: fixed; left:0; right:0; bottom:0; height:5px; display:flex; z-index:20; }
+  .rail span { height:100%; flex:1; background: var(--line); transition: background .3s; }
+  .rail span.on:nth-child(4n+1){ background: var(--g-blue); }
+  .rail span.on:nth-child(4n+2){ background: var(--g-red); }
+  .rail span.on:nth-child(4n+3){ background: var(--g-yellow); }
+  .rail span.on:nth-child(4n+4){ background: var(--g-green); }
+
+  .counter {
+    position: fixed; right: 20px; top: 18px; z-index:20;
+    font-size: 13px; font-weight:600; color: var(--muted);
+    font-variant-numeric: tabular-nums; letter-spacing:.02em;
+  }
+  .brandmark {
+    position: fixed; left: 20px; top: 16px; z-index:20;
+    display:flex; align-items:center; gap:9px;
+    font-size:13px; font-weight:600; color: var(--muted); letter-spacing:.01em;
+  }
+  .brandmark .g { display:flex; gap:3px; }
+  .brandmark .g i { width:8px; height:8px; border-radius:50%; display:block; }
+
+  .nav-hint {
+    position: fixed; right: 20px; bottom: 16px; z-index:20;
+    font-size: 12px; color: var(--muted); opacity:.85;
+    display:flex; align-items:center; gap:8px;
+  }
+  kbd {
+    font-family: var(--sans); font-size:11px; font-weight:600;
+    border:1px solid var(--line); border-bottom-width:2px; border-radius:6px;
+    padding: 2px 7px; color: var(--ink-soft); background: var(--panel);
+  }
+  .arrows { position: fixed; right: 18px; bottom: 46px; z-index:21; display:flex; gap:8px; }
+  .arrows button {
+    width:42px; height:42px; border-radius:50%;
+    border:1px solid var(--line); background: var(--panel); color: var(--ink);
+    font-size:18px; cursor:pointer; box-shadow: var(--shadow);
+    display:grid; place-items:center; transition: transform .12s, background .2s;
+  }
+  .arrows button:hover { background: var(--panel-2); transform: translateY(-1px); }
+  .arrows button:focus-visible, .toggle:focus-visible { outline: 3px solid var(--g-blue); outline-offset:2px; }
+  .toggle {
+    position: fixed; right: 92px; top: 14px; z-index:21;
+    border:1px solid var(--line); background: var(--panel); color: var(--ink);
+    border-radius: 999px; padding:7px 13px; font-size:12px; font-weight:600; cursor:pointer;
+    font-family: var(--sans);
+  }
+
+  /* footnote / source */
+  .src { font-size: clamp(11px,1.2vw,13px); color: var(--muted); }
+  .kicker { font-weight:700; }
+</style>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · TITLE -->
+  <section class="slide" data-notes="title">
+    <div class="inner">
+      <div class="title-wrap">
+        <div class="eyebrow rise"><span class="dot" style="background:var(--g-blue)"></span> Google DeepMind · Nature, 2021</div>
+        <h1 class="wordmark rise"><span class="a1">A</span><span class="a2">l</span><span class="a3">p</span><span class="a4">h</span><span class="a5">a</span><span class="a6">F</span><span class="a7">o</span><span class="a8">l</span><span class="a9">d</span></h1>
+        <p class="lead rise">Teaching an AI to see the shape of life — and cracking a <b>50-year</b> grand challenge in biology.</p>
+        <div class="src rise">Jumper et&nbsp;al. “Highly accurate protein structure prediction with AlphaFold.” <i>Nature</i> 596, 583–589 (2021).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · WHY IT MATTERS -->
+  <section class="slide" data-notes="why">
+    <div class="inner">
+      <div class="grid2">
+        <div style="display:flex; flex-direction:column; gap: 22px;">
+          <div class="eyebrow rise"><span class="dot" style="background:var(--g-blue)"></span> Why it matters</div>
+          <h2 class="rise">Proteins are the<br>machines of life.</h2>
+          <p class="lead rise">Every muscle, antibody, and enzyme is a protein — and <b>what it does depends on the 3-D shape it folds into.</b></p>
+          <p class="sub rise">Know the shape, and you can understand a disease, or design the drug that fits it.</p>
+        </div>
+        <div class="visual rise" aria-hidden="true">
+          <!-- sequence folding into shape -->
+          <svg viewBox="0 0 420 340">
+            <defs>
+              <linearGradient id="chain" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#4285F4"/><stop offset=".5" stop-color="#34A853"/><stop offset="1" stop-color="#EA4335"/>
+              </linearGradient>
+            </defs>
+            <!-- letters -->
+            <g font-family="var(--sans)" font-weight="700" font-size="20" fill="var(--muted)" opacity=".8">
+              <text x="20" y="46">M</text><text x="52" y="46">K</text><text x="84" y="46">T</text><text x="116" y="46">A</text>
+              <text x="148" y="46">Y</text><text x="180" y="46">I</text><text x="212" y="46">A</text><text x="244" y="46">K</text>
+              <text x="276" y="46">Q</text><text x="308" y="46">R</text><text x="340" y="46">G</text><text x="372" y="46">…</text>
+            </g>
+            <text x="20" y="76" font-size="12" fill="var(--muted)" font-weight="600" letter-spacing=".08em">1-D SEQUENCE</text>
+            <!-- arrow -->
+            <g stroke="var(--line)" stroke-width="2"><line x1="210" y1="96" x2="210" y2="132"/></g>
+            <path d="M204 126 L210 138 L216 126" fill="none" stroke="var(--muted)" stroke-width="2"/>
+            <!-- ribbon -->
+            <path d="M60 250 C 90 150, 150 300, 200 210 S 300 150, 330 250 S 360 300, 300 300 S 120 320, 90 280 S 40 300, 60 250 Z"
+                  fill="none" stroke="url(#chain)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="60" cy="250" r="9" fill="#4285F4"/>
+            <circle cx="330" cy="250" r="9" fill="#EA4335"/>
+            <text x="210" y="332" text-anchor="middle" font-size="12" fill="var(--muted)" font-weight="600" letter-spacing=".08em">3-D STRUCTURE = FUNCTION</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · THE GAP -->
+  <section class="slide" data-notes="gap">
+    <div class="inner">
+      <div class="eyebrow rise"><span class="dot" style="background:var(--g-red)"></span> The conflict</div>
+      <h2 class="rise">We could <span class="accent-blue">read</span> the sequence.<br>We couldn't <span class="accent-red">see</span> the shape.</h2>
+      <div class="grid2 rise" style="margin-top: 6px;">
+        <div class="stat-row">
+          <div class="stat">
+            <div class="n accent-blue">200M+</div>
+            <div class="l">protein sequences known from DNA</div>
+          </div>
+          <div class="stat">
+            <div class="n accent-red">~0.1%</div>
+            <div class="l">had a structure solved in the lab</div>
+          </div>
+        </div>
+        <div class="card">
+          <p class="sub" style="margin:0;">The only way to <i>see</i> a structure — X-ray crystallography, cryo-EM — takes <b style="color:var(--ink)">months to years</b> and can cost a PhD's worth of work for a <b style="color:var(--ink)">single</b> protein.</p>
+        </div>
+      </div>
+      <!-- proportion bar -->
+      <div class="rise" aria-hidden="true" style="margin-top:4px;">
+        <svg viewBox="0 0 1000 40" preserveAspectRatio="none" style="height:34px;">
+          <rect x="0" y="10" width="1000" height="20" rx="10" fill="var(--panel-2)"/>
+          <rect x="0" y="10" width="4" height="20" rx="2" fill="var(--g-red)"/>
+        </svg>
+        <p class="src" style="margin-top:8px;">The red sliver is every structure humanity had solved. Everything grey was still dark.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · WHY HARD -->
+  <section class="slide" data-notes="hard">
+    <div class="inner">
+      <div class="grid2">
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="eyebrow rise"><span class="dot" style="background:var(--g-yellow)"></span> Why it was unsolved</div>
+          <h2 class="rise">Too many ways<br>to fold.</h2>
+          <p class="lead rise">A single protein could fold in more ways than there are <b>atoms in the universe.</b></p>
+          <p class="sub rise">Yet nature does it in a thousandth of a second. Brute force was never going to work — you had to learn the rules.</p>
+        </div>
+        <div class="rise" style="display:flex; flex-direction:column; gap:16px; align-items:flex-start;">
+          <div class="card" style="width:100%;">
+            <div class="bignum" style="font-size:clamp(30px,5vw,58px); color:var(--g-yellow); -webkit-text-stroke:.5px var(--muted);">10<tspan style="font-size:.5em; vertical-align:super;">300</tspan></div>
+            <div class="sub" style="margin-top:8px;">possible shapes for one modest protein <span class="src">(Levinthal's paradox)</span></div>
+          </div>
+          <div class="chips">
+            <span class="chip">50 years unsolved</span>
+            <span class="chip">since Anfinsen, 1972</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · THE BREAKTHROUGH -->
+  <section class="slide" data-notes="how">
+    <div class="inner">
+      <div class="eyebrow rise"><span class="dot" style="background:var(--g-green)"></span> The breakthrough</div>
+      <h2 class="rise">AlphaFold reads <span class="accent-green">evolution</span>,<br>then predicts the fold.</h2>
+      <p class="lead rise" style="margin-top:4px;">A deep-learning system, trained end-to-end: it lines up related proteins across species, reasons over every pair of amino acids with attention, and builds the 3-D structure directly.</p>
+      <div class="visual rise" aria-hidden="true" style="margin-top:6px;">
+        <svg viewBox="0 0 1040 150">
+          <!-- pipeline -->
+          <g font-family="var(--sans)">
+            <!-- node template -->
+            <g>
+              <rect x="0" y="35" width="196" height="80" rx="14" fill="var(--panel)" stroke="var(--g-blue)" stroke-width="2"/>
+              <text x="98" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">Evolution</text>
+              <text x="98" y="92" text-anchor="middle" font-size="12" fill="var(--muted)">related sequences (MSA)</text>
+            </g>
+            <g>
+              <rect x="278" y="35" width="196" height="80" rx="14" fill="var(--panel)" stroke="var(--g-red)" stroke-width="2"/>
+              <text x="376" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">Evoformer</text>
+              <text x="376" y="92" text-anchor="middle" font-size="12" fill="var(--muted)">48 attention blocks</text>
+            </g>
+            <g>
+              <rect x="556" y="35" width="196" height="80" rx="14" fill="var(--panel)" stroke="var(--g-yellow)" stroke-width="2"/>
+              <text x="654" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">Structure</text>
+              <text x="654" y="92" text-anchor="middle" font-size="12" fill="var(--muted)">module → coordinates</text>
+            </g>
+            <g>
+              <rect x="834" y="35" width="196" height="80" rx="14" fill="var(--panel)" stroke="var(--g-green)" stroke-width="2"/>
+              <text x="932" y="70" text-anchor="middle" font-size="16" font-weight="700" fill="var(--ink)">3-D protein</text>
+              <text x="932" y="92" text-anchor="middle" font-size="12" fill="var(--muted)">atomic model</text>
+            </g>
+            <!-- arrows -->
+            <g stroke="var(--muted)" stroke-width="2" fill="none">
+              <line x1="196" y1="75" x2="272" y2="75"/><path d="M266 69 L276 75 L266 81"/>
+              <line x1="474" y1="75" x2="550" y2="75"/><path d="M544 69 L554 75 L544 81"/>
+              <line x1="752" y1="75" x2="828" y2="75"/><path d="M822 69 L832 75 L822 81"/>
+            </g>
+            <!-- recycle loop -->
+            <path d="M654 120 C 654 145, 376 145, 376 120" fill="none" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <text x="515" y="140" text-anchor="middle" font-size="11" fill="var(--muted)">recycle &amp; refine</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · THE RESULT -->
+  <section class="slide" data-notes="result">
+    <div class="inner">
+      <div class="grid2">
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="eyebrow rise"><span class="dot" style="background:var(--g-green)"></span> The result · CASP14, 2020</div>
+          <h2 class="rise">Accurate to the<br>width of an atom.</h2>
+          <p class="lead rise">On the field's blind test, AlphaFold matched experiments so closely the organizers declared the problem <b class="accent-green">solved.</b></p>
+          <div class="stat-row rise">
+            <div class="stat"><div class="n accent-green">92.4</div><div class="l">median accuracy score / 100 (GDT)</div></div>
+            <div class="stat"><div class="n">~1&thinsp;Å</div><div class="l">typical error — one atom's width</div></div>
+          </div>
+        </div>
+        <div class="rise visual" aria-hidden="true">
+          <!-- accuracy bars -->
+          <svg viewBox="0 0 360 280">
+            <g font-family="var(--sans)">
+              <line x1="70" y1="20" x2="70" y2="230" stroke="var(--line)" stroke-width="1.5"/>
+              <!-- gridlines -->
+              <g stroke="var(--line)" stroke-width="1" stroke-dasharray="3 4">
+                <line x1="70" y1="60" x2="350" y2="60"/><line x1="70" y1="120" x2="350" y2="120"/><line x1="70" y1="180" x2="350" y2="180"/>
+              </g>
+              <text x="60" y="24" text-anchor="end" font-size="11" fill="var(--muted)">100</text>
+              <text x="60" y="184" text-anchor="end" font-size="11" fill="var(--muted)">40</text>
+              <!-- AlphaFold bar (92.4 -> height) -->
+              <rect x="110" y="34" width="72" height="196" rx="8" fill="var(--g-green)"/>
+              <text x="146" y="26" text-anchor="middle" font-size="16" font-weight="700" fill="var(--g-green)">92</text>
+              <text x="146" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">AlphaFold</text>
+              <!-- next best (~72) -->
+              <rect x="242" y="106" width="72" height="124" rx="8" fill="var(--panel-2)" stroke="var(--line)"/>
+              <text x="278" y="98" text-anchor="middle" font-size="16" font-weight="700" fill="var(--muted)">~72</text>
+              <text x="278" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="var(--muted)">Next best</text>
+              <text x="210" y="274" text-anchor="middle" font-size="11" fill="var(--muted)">median GDT across CASP14 targets</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · IMPACT / CLOSE -->
+  <section class="slide" data-notes="impact">
+    <div class="inner">
+      <div class="eyebrow rise"><span class="dot" style="background:var(--g-blue)"></span> The impact</div>
+      <h2 class="rise">From <span class="accent-red">200,000</span> structures<br>to <span class="accent-green">200 million</span> — free to everyone.</h2>
+      <p class="lead rise" style="margin-top:2px;">DeepMind released a structure for nearly every known protein. Overnight, biology got its map.</p>
+      <div class="chips rise" style="margin-top:6px;">
+        <span class="chip"><span class="k" style="background:var(--g-red)"></span>Malaria vaccines</span>
+        <span class="chip"><span class="k" style="background:var(--g-yellow)"></span>Antibiotic resistance</span>
+        <span class="chip"><span class="k" style="background:var(--g-green)"></span>Plastic-eating enzymes</span>
+        <span class="chip"><span class="k" style="background:var(--g-blue)"></span>Faster drug discovery</span>
+      </div>
+      <p class="lead rise" style="margin-top:14px;"><b>2024 Nobel Prize in Chemistry.</b> A grand challenge, closed — and handed to the world.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- chrome -->
+<div class="brandmark" aria-hidden="true">
+  <span class="g"><i style="background:#4285F4"></i><i style="background:#EA4335"></i><i style="background:#FBBC05"></i><i style="background:#34A853"></i></span>
+  AlphaFold
+</div>
+<button class="toggle" id="themeBtn" aria-label="Toggle light or dark theme">Theme</button>
+<div class="counter" id="counter">01 / 07</div>
+<div class="rail" id="rail" aria-hidden="true"></div>
+<div class="arrows">
+  <button id="prev" aria-label="Previous slide">‹</button>
+  <button id="next" aria-label="Next slide">›</button>
+</div>
+<div class="nav-hint" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> to navigate · <kbd>F</kbd> fullscreen</div>
+
+<script>
+  (function () {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+    var rail = document.getElementById('rail');
+    var counter = document.getElementById('counter');
+    var i = 0;
+
+    slides.forEach(function (_, n) {
+      var s = document.createElement('span');
+      rail.appendChild(s);
+    });
+    var bars = Array.prototype.slice.call(rail.children);
+
+    function pad(n){ return (n < 10 ? '0' : '') + n; }
+
+    function show(n) {
+      n = Math.max(0, Math.min(slides.length - 1, n));
+      slides.forEach(function (s, k) {
+        var on = k === n;
+        s.classList.toggle('active', on);
+        s.classList.remove('enter');
+        if (on) { void s.offsetWidth; s.classList.add('enter'); }
+      });
+      bars.forEach(function (b, k) { b.classList.toggle('on', k <= n); });
+      counter.textContent = pad(n + 1) + ' / ' + pad(slides.length);
+      i = n;
+    }
+
+    function nextS(){ show(i + 1); }
+    function prevS(){ show(i - 1); }
+
+    document.getElementById('next').addEventListener('click', nextS);
+    document.getElementById('prev').addEventListener('click', prevS);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); nextS(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prevS(); }
+      else if (e.key === 'Home') { show(0); }
+      else if (e.key === 'End') { show(slides.length - 1); }
+      else if (e.key === 'f' || e.key === 'F') {
+        if (!document.fullscreenElement) { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); }
+        else { document.exitFullscreen && document.exitFullscreen(); }
+      }
+    });
+
+    // swipe
+    var x0 = null;
+    document.addEventListener('touchstart', function (e){ x0 = e.touches[0].clientX; }, {passive:true});
+    document.addEventListener('touchend', function (e){
+      if (x0 === null) return;
+      var dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 45) { dx < 0 ? nextS() : prevS(); }
+      x0 = null;
+    }, {passive:true});
+
+    // theme toggle
+    var themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', function () {
+      var root = document.documentElement;
+      var cur = root.getAttribute('data-theme');
+      var dark = cur ? cur === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    });
+
+    show(0);
+  })();
+</script>
