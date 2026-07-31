@@ -1,7 +1,6 @@
-"""Quickstart example for prettyplots.
+"""Quickstart for prettyplots — renders a 2x2 showcase.
 
 Run with:  python examples/quickstart.py
-Saves PNGs next to this file.
 """
 
 import numpy as np
@@ -10,26 +9,20 @@ import prettyplots as pp
 
 pp.set_theme()
 
-# 1) A cute line plot with background sparkles.
-x = np.linspace(0, 2 * np.pi, 120)
-fig, ax = pp.line(x, np.sin(x), label="sin", title="Pretty line plot",
-                  xlabel="x", ylabel="y")
-pp.line(x, np.cos(x), label="cos", color=pp.FILLS[1], ax=ax)
-pp.sprinkles(ax, glyph="✦")
-fig.savefig("examples/line.png", dpi=150)
+fig, axes = pp.subplots(2, 2, figsize=(9, 6.2))
+cats = ["lily", "rose", "iris", "fern"]
 
-# 2) A bar chart with a dotted texture.
-fig, ax = pp.bar(["clover", "lilac", "rose", "cream"], [5, 3, 6, 4],
-                 title="Pastel bars", ylabel="count", pattern="dots")
-fig.savefig("examples/bars.png", dpi=150)
+pp.bar(cats, [5, 3, 6, 4], title="Bar", ax=axes[0, 0])
 
-# 3) Transform a *standard* matplotlib plot with prettify().
-import matplotlib.pyplot as plt
+x = np.linspace(-3, 3, 200)
+pp.line(x, np.exp(-x**2) + 0.55 * np.exp(-(x - 1.4)**2 * 5) + 0.1,
+        title="Line", ax=axes[0, 1])
 
-fig, ax = plt.subplots()
-ax.bar(["a", "b", "c"], [2, 5, 3])          # plain matplotlib
-ax.set_title("Prettified")
-pp.prettify(ax, pattern="stars")            # <- one call restyles it
-fig.savefig("examples/prettified.png", dpi=150)
+pp.scatter(np.random.default_rng(11).normal(0, 1, 38),
+           np.random.default_rng(3).normal(0, 1, 38), title="Scatter", ax=axes[1, 0])
 
-print("Saved examples/line.png, bars.png, prettified.png")
+pp.pie([4, 3, 2, 5], labels=cats, title="Pie", ax=axes[1, 1])
+
+fig.suptitle("prettyplots", fontsize=16, fontweight="bold")
+fig.savefig("examples/showcase.png", dpi=150)
+print("Saved examples/showcase.png")

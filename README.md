@@ -1,10 +1,11 @@
 # prettyplots
 
-A small Python library for making pretty plots, built on top of
-[matplotlib](https://matplotlib.org/).
+A tiny [matplotlib](https://matplotlib.org/) wrapper that makes soft, pretty,
+pastel plots — a **pink · white · yellow · green** palette, black lines,
+gradient bars, a faint pink-blob background and frosted-glass panels.
 
-> Status: early scaffold — the bare-bones structure is in place and ready for
-> you to build on.
+- **Minimal deps:** just matplotlib (and numpy, which ships with it).
+- **Tiny:** the whole library is one file, under 200 lines.
 
 ## Install (editable / development)
 
@@ -17,37 +18,48 @@ pip install -e ".[dev]"
 ```python
 import prettyplots as pp
 
-pp.set_theme(palette="vibrant")
+pp.set_theme()
 
-fig, ax = pp.line([1, 2, 3, 4], [10, 8, 12, 9], title="My first plot",
-                  xlabel="x", ylabel="y", label="series A")
-fig.savefig("plot.png")
+# single plot
+fig, ax = pp.bar(["lily", "rose", "iris"], [5, 3, 6], title="Bloom")
+fig.savefig("bar.png")
+
+# a grid — background + frosted panels applied automatically
+fig, axes = pp.subplots(2, 2)
+pp.bar(["a", "b", "c"], [3, 5, 2], ax=axes[0, 0])
+pp.line([0, 1, 2, 3], [1, 3, 2, 4], ax=axes[0, 1])
+pp.scatter([1, 2, 3], [2, 1, 3], ax=axes[1, 0])
+pp.pie([4, 3, 2], labels=["a", "b", "c"], ax=axes[1, 1])
 ```
 
-Or run the example:
+Or run the showcase:
 
 ```bash
-python examples/quickstart.py
+python examples/quickstart.py   # writes examples/showcase.png
 ```
 
-## Project layout
+## API
 
-```
-src/prettyplots/
-    __init__.py     # public API
-    theme.py        # global styling via set_theme()
-    palettes.py     # named color palettes
-    plots.py        # plotting functions (line, scatter, bar, ...)
-tests/              # pytest smoke tests
-examples/           # runnable examples
-```
+| Function | What it does |
+|---|---|
+| `set_theme(font_scale=1.0)` | Apply the theme globally (call once). |
+| `subplots(nrows, ncols, **kw)` | `plt.subplots` + blob background + frosted panels. |
+| `bar(cats, vals, gradient=True, ...)` | Gradient (or solid) pastel bars. |
+| `line(x, y, fill=True, ...)` | Black line with an optional soft fill. |
+| `scatter(x, y, color=..., ...)` | Pastel points, black outlines. |
+| `hist(data, bins=10, ...)` | Pastel histogram. |
+| `pie(values, labels=..., ...)` | Pastel wedges, black outlines. |
+| `background(fig=None)` | Draw just the pink-blob background. |
 
-## Where to start coding
+Every plotting function returns `(fig, ax)` so you can keep customizing with
+plain matplotlib. Pass `ax=` (e.g. from `pp.subplots`) to draw into a grid.
 
-- **Add a new chart type:** write a function in `src/prettyplots/plots.py`
-  that returns `(fig, ax)`, then export it in `__init__.py`.
-- **Change the look:** edit the rcParams in `src/prettyplots/theme.py`.
-- **Add colors:** add an entry to `PALETTES` in `src/prettyplots/palettes.py`.
+## Customizing
+
+- **Colors:** edit `FILLS` / the palette constants at the top of
+  `src/prettyplots/__init__.py`.
+- **Background:** tweak the `spots` list in `_blobs()`.
+- **Frosting:** change the panel alpha in `_frost()`.
 
 ## Running tests
 
