@@ -231,7 +231,7 @@
       <div class="title-wrap">
         <div class="eyebrow rise"><span class="dot" style="background:var(--g-blue)"></span> Google DeepMind · Nature, 2021</div>
         <h1 class="wordmark rise"><span class="a1">A</span><span class="a2">l</span><span class="a3">p</span><span class="a4">h</span><span class="a5">a</span><span class="a6">F</span><span class="a7">o</span><span class="a8">l</span><span class="a9">d</span></h1>
-        <p class="lead rise">For <b>50 years</b>, one question went unanswered: can we predict a protein's <span class="accent-blue">3-D shape</span> from its <span class="accent-red">1-D sequence</span>?</p>
+        <p class="lead rise" style="font-weight:600; font-size:clamp(22px,3.4vw,40px);"><span class="accent-red">1-D sequence</span> &nbsp;→&nbsp; <span class="accent-blue">3-D shape</span>?</p>
         <div class="src rise">Jumper et&nbsp;al. “Highly accurate protein structure prediction with AlphaFold.” <i>Nature</i> 596, 583–589 (2021).</div>
       </div>
     </div>
@@ -243,9 +243,8 @@
       <div class="grid2">
         <div style="display:flex; flex-direction:column; gap: 20px;">
           <div class="eyebrow rise"><span class="dot" style="background:var(--g-blue)"></span> Why it matters</div>
-          <h2 class="rise">Proteins are the<br>machines of life.</h2>
-          <p class="lead rise">Everything they do depends on one thing — <b>their shape.</b></p>
-          <p class="sub rise">And when a protein folds <span class="accent-red">wrong</span>, you get diseases like Alzheimer's.</p>
+          <h2 class="rise">Shape<br>= function.</h2>
+          <p class="sub rise" style="font-size:clamp(17px,2vw,24px); font-weight:600;">misfold → <span class="accent-red">disease</span></p>
         </div>
         <div class="visual rise" aria-hidden="true">
           <svg viewBox="0 0 420 300">
@@ -280,9 +279,7 @@
       <div class="grid2">
         <div style="display:flex; flex-direction:column; gap: 20px;">
           <div class="eyebrow rise"><span class="dot" style="background:var(--g-yellow)"></span> Same material · new function</div>
-          <h2 class="rise">Fold it,<br>and it flies.</h2>
-          <p class="lead rise">A flat sheet of paper, folded, becomes a plane — same material, but now it can fly.</p>
-          <p class="sub rise">Proteins are the same: a <b>1-D chain</b> must fold into a <b>3-D shape</b> before it can work.</p>
+          <h2 class="rise">It's all<br>in the fold.</h2>
         </div>
         <div class="visual rise" aria-hidden="true">
           <svg viewBox="0 0 440 320">
@@ -337,15 +334,12 @@
   <section class="slide" data-notes="conflict">
     <div class="inner">
       <div class="eyebrow rise"><span class="dot" style="background:var(--g-red)"></span> The problem</div>
-      <h2 class="rise">So why can't we<br>just calculate it?</h2>
-      <div class="grid2 rise" style="margin-top:8px; align-items:center;">
+      <h2 class="rise">Too many ways<br>to fold.</h2>
+      <div class="rise" style="display:flex; align-items:center; gap: clamp(24px,5vw,60px); flex-wrap:wrap; margin-top:12px;">
+        <div class="megn accent-red" style="font-size: clamp(72px, 15vw, 172px);">10<span style="font-size:.42em; vertical-align:super; letter-spacing:0;">300</span></div>
         <div>
-          <div class="megn accent-red" style="font-size: clamp(64px, 13vw, 150px);">10<span style="font-size:.42em; vertical-align:super; letter-spacing:0;">300</span></div>
-          <div class="tag" style="margin-top:6px;">ways a single protein could fold</div>
-        </div>
-        <div class="card">
-          <p class="lead" style="margin:0;">That's more folding possibilities than there are <b>atoms in the observable universe.</b></p>
-          <p class="src" style="margin-top:12px;">Brute force would take years — for almost nothing.</p>
+          <div class="tag">possible folds</div>
+          <div class="lead" style="margin:6px 0 0; font-weight:600;">&gt; atoms in the universe</div>
         </div>
       </div>
     </div>
@@ -355,23 +349,22 @@
   <section class="slide" data-notes="solution">
     <div class="inner">
       <div class="eyebrow rise"><span class="dot" style="background:var(--g-green)"></span> The breakthrough · 2021</div>
-      <h2 class="rise">AlphaFold learns the<br>shape from <span class="accent-green">data.</span></h2>
-      <p class="lead rise" style="margin-top:2px;">Google DeepMind built an AI that skips the physics — and learns to fold in three steps.</p>
+      <h2 class="rise">Learns the shape<br>from <span class="accent-green">data.</span></h2>
       <div class="steps rise" style="margin-top:8px;">
         <div class="step">
           <div class="badge" style="background:var(--g-blue)">1</div>
-          <h3>Learns from evolution</h3>
-          <p>It reads folding patterns evolution already discovered across related proteins.</p>
+          <h3>Learn from evolution</h3>
+          <p>known patterns</p>
         </div>
         <div class="step">
           <div class="badge" style="background:var(--g-red)">2</div>
-          <h3>Reasons about the parts</h3>
-          <p>It works out how each part of the protein influences the others — inside a neural network called the <b>Evoformer.</b></p>
+          <h3>Reason about the parts</h3>
+          <p>the <b>Evoformer</b></p>
         </div>
         <div class="step">
           <div class="badge" style="background:var(--g-green)">3</div>
-          <h3>Builds the structure</h3>
-          <p>It assembles the final 3-D shape it predicts, atom by atom.</p>
+          <h3>Build the 3-D shape</h3>
+          <p>the prediction</p>
         </div>
       </div>
     </div>
@@ -386,7 +379,7 @@
           <h2 class="rise">And it <span class="accent-green">worked.</span></h2>
           <div class="rise">
             <div class="megn accent-green" style="font-size: clamp(56px, 10vw, 104px);">≈1&thinsp;Å</div>
-            <div class="tag" style="margin-top:8px;">prediction vs. real experiment —<br>the width of a single atom</div>
+            <div class="tag" style="margin-top:8px;">1 atom wide</div>
           </div>
         </div>
         <div class="visual rise" aria-hidden="true">
@@ -427,10 +420,10 @@
         </div>
       </div>
       <div class="chips rise" style="margin-top:22px; justify-content:center;">
-        <span class="chip"><span class="k" style="background:var(--g-red)"></span>Accelerating disease research</span>
-        <span class="chip"><span class="k" style="background:var(--g-blue)"></span>Speeding up drug discovery</span>
+        <span class="chip"><span class="k" style="background:var(--g-red)"></span>Disease research</span>
+        <span class="chip"><span class="k" style="background:var(--g-blue)"></span>Drug discovery</span>
       </div>
-      <p class="lead rise" style="margin-top:16px; text-align:center; max-width:none;">Proof that <b>AI can help solve science's biggest problems.</b></p>
+      <p class="lead rise" style="margin-top:18px; text-align:center; max-width:none; font-weight:700;">AI → science's hardest problems.</p>
     </div>
   </section>
 
