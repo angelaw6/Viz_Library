@@ -122,12 +122,12 @@
   /* ---------- title fold ---------- */
   .title-wrap { display:flex; flex-direction:column; gap: clamp(18px,3vh,30px); }
   .wordmark { font-weight:700; letter-spacing:-.03em; }
-  /* calmer wordmark: ink base with three Google accents evenly spaced (A blue · a yellow · d green) */
-  .wordmark .a1{color:var(--g-blue);} .wordmark .a2{color:var(--ink);}
-  .wordmark .a3{color:var(--ink);} .wordmark .a4{color:var(--ink);}
-  .wordmark .a5{color:var(--g-yellow);} .wordmark .a6{color:var(--ink);}
-  .wordmark .a7{color:var(--ink);} .wordmark .a8{color:var(--ink);}
-  .wordmark .a9{color:var(--g-green);}
+  /* full Google-color wordmark; ordered so red and green never sit adjacent */
+  .wordmark .a1{color:var(--g-blue);} .wordmark .a2{color:var(--g-red);}
+  .wordmark .a3{color:var(--g-yellow);} .wordmark .a4{color:var(--g-blue);}
+  .wordmark .a5{color:var(--g-green);} .wordmark .a6{color:var(--g-yellow);}
+  .wordmark .a7{color:var(--g-blue);} .wordmark .a8{color:var(--g-red);}
+  .wordmark .a9{color:var(--g-blue);}
 
   /* ---------- stat ---------- */
   .stat-row { display:flex; flex-wrap:wrap; gap: clamp(20px,4vw,52px); }
