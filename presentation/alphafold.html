@@ -110,7 +110,7 @@
     letter-spacing: -.02em; text-wrap: balance;
   }
   .lead { font-size: clamp(18px, 2.5vw, 27px); line-height: 1.32; color: var(--ink-soft); font-weight: 400; max-width: 60ch; margin:0; text-wrap: balance; }
-  .sub  { font-size: clamp(15px, 1.7vw, 19px); line-height: 1.5; color: var(--muted); max-width: 56ch; margin:0; }
+  .sub  { font-size: clamp(16px, 2vw, 22px); line-height: 1.5; color: var(--muted); max-width: 56ch; margin:0; }
   .accent-blue { color: var(--g-blue-d); }
   .accent-red  { color: var(--g-red); }
   .accent-green{ color: var(--g-green); }
@@ -122,11 +122,12 @@
   /* ---------- title fold ---------- */
   .title-wrap { display:flex; flex-direction:column; gap: clamp(18px,3vh,30px); }
   .wordmark { font-weight:700; letter-spacing:-.03em; }
+  /* colors ordered so red and green never sit adjacent */
   .wordmark .a1{color:var(--g-blue);} .wordmark .a2{color:var(--g-red);}
   .wordmark .a3{color:var(--g-yellow);} .wordmark .a4{color:var(--g-blue);}
-  .wordmark .a5{color:var(--g-green);} .wordmark .a6{color:var(--g-red);}
-  .wordmark .a7{color:var(--g-blue);} .wordmark .a8{color:var(--g-green);}
-  .wordmark .a9{color:var(--g-yellow);}
+  .wordmark .a5{color:var(--g-green);} .wordmark .a6{color:var(--g-yellow);}
+  .wordmark .a7{color:var(--g-blue);} .wordmark .a8{color:var(--g-red);}
+  .wordmark .a9{color:var(--g-blue);}
 
   /* ---------- stat ---------- */
   .stat-row { display:flex; flex-wrap:wrap; gap: clamp(20px,4vw,52px); }
@@ -144,8 +145,8 @@
 
   .chips { display:flex; flex-wrap:wrap; gap:10px; }
   .chip {
-    font-size: clamp(13px,1.5vw,16px); font-weight:600;
-    padding: 9px 16px; border-radius: 999px;
+    font-size: clamp(14px,1.7vw,18px); font-weight:600;
+    padding: 10px 18px; border-radius: 999px;
     background: var(--panel-2); border:1px solid var(--line); color: var(--ink-soft);
   }
   .chip .k { width:9px; height:9px; border-radius:3px; display:inline-block; margin-right:8px; vertical-align: middle; }
@@ -160,7 +161,7 @@
   }
   .step .badge { width:32px; height:32px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:700; font-size:15px; }
   .step h3 { margin:0; font-size: clamp(15px,1.7vw,19px); font-weight:700; letter-spacing:-.01em; }
-  .step p  { margin:0; font-size: clamp(13px,1.4vw,15px); color: var(--muted); line-height:1.4; }
+  .step p  { margin:0; font-size: clamp(14px,1.7vw,17px); color: var(--muted); line-height:1.4; }
 
   /* ---------- big contrast ---------- */
   .contrast { display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; gap: clamp(16px,3vw,40px); }
@@ -168,7 +169,7 @@
   .contrast .arrow { font-size: clamp(26px,3vw,40px); color: var(--muted); text-align:center; }
   @media (max-width: 820px){ .contrast .arrow { transform: rotate(90deg); } }
   .megn { font-weight:700; letter-spacing:-.04em; line-height:.86; font-variant-numeric: tabular-nums; }
-  .tag { font-size: clamp(12px,1.4vw,15px); font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
+  .tag { font-size: clamp(13px,1.7vw,17px); font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); }
 
   svg { display:block; width:100%; height:auto; overflow: visible; }
   .visual { width:100%; }
@@ -220,7 +221,7 @@
     font-family: var(--sans);
   }
 
-  .src { font-size: clamp(11px,1.2vw,13px); color: var(--muted); }
+  .src { font-size: clamp(12px,1.35vw,15px); color: var(--muted); }
 </style>
 
 <div class="deck" id="deck">
@@ -250,22 +251,22 @@
           <svg viewBox="0 0 420 300">
             <defs>
               <linearGradient id="good" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#4285F4"/><stop offset="1" stop-color="#34A853"/>
+                <stop offset="0" stop-color="#4285F4"/><stop offset="1" stop-color="#1a73e8"/>
               </linearGradient>
             </defs>
             <!-- healthy fold -->
             <g>
               <path d="M40 150 C 70 80, 130 200, 165 130 S 210 90, 195 160 S 120 210, 90 175 S 40 195, 40 150 Z"
                     fill="none" stroke="url(#good)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="118" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="var(--g-green)">Folds right</text>
-              <text x="118" y="272" text-anchor="middle" font-size="12" fill="var(--muted)">it works</text>
+              <text x="118" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="var(--g-blue-d)">Folds right</text>
+              <text x="118" y="272" text-anchor="middle" font-size="14" fill="var(--muted)">it works</text>
             </g>
             <!-- misfold -->
             <g>
               <path d="M255 150 C 300 110, 270 175, 320 150 C 360 130, 300 200, 350 185 C 385 175, 320 140, 300 165 C 280 190, 335 205, 300 160"
                     fill="none" stroke="var(--g-red)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="315" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="var(--g-red)">Folds wrong</text>
-              <text x="315" y="272" text-anchor="middle" font-size="12" fill="var(--muted)">disease</text>
+              <text x="315" y="250" text-anchor="middle" font-size="16" font-weight="700" fill="var(--g-red)">Folds wrong</text>
+              <text x="315" y="272" text-anchor="middle" font-size="14" fill="var(--muted)">disease</text>
             </g>
           </svg>
         </div>
@@ -303,7 +304,7 @@
                 <path d="M0 40 L92 6 L44 30 Z" fill="var(--g-blue)"/>
                 <path d="M44 30 L92 6 L54 70 Z" fill="var(--g-blue-d)"/>
               </g>
-              <text x="220" y="150" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--muted)">paper → plane · now it flies</text>
+              <text x="220" y="150" text-anchor="middle" font-size="14" font-weight="600" fill="var(--muted)">paper → plane · now it flies</text>
             </g>
             <!-- divider -->
             <line x1="30" y1="185" x2="410" y2="185" stroke="var(--line)" stroke-width="1"/>
@@ -313,7 +314,7 @@
               <g>
                 <line x1="30" y1="105" x2="116" y2="105" stroke="var(--g-blue)" stroke-width="4" stroke-linecap="round"/>
                 <circle cx="34" cy="105" r="6" fill="var(--g-blue)"/><circle cx="57" cy="105" r="6" fill="var(--g-green)"/>
-                <circle cx="80" cy="105" r="6" fill="var(--g-yellow)"/><circle cx="103" cy="105" r="6" fill="var(--g-red)"/>
+                <circle cx="80" cy="105" r="6" fill="var(--g-yellow)"/><circle cx="103" cy="105" r="6" fill="var(--g-blue-d)"/>
               </g>
               <!-- arrow -->
               <g stroke="var(--muted)" stroke-width="2" fill="none">
@@ -322,7 +323,7 @@
               <!-- folded ribbon -->
               <path d="M250 118 C 280 78, 330 150, 350 108 S 392 88, 372 140 S 300 150, 285 122 S 250 140, 250 118 Z"
                     fill="none" stroke="url(#goodB)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-              <text x="220" y="185" text-anchor="middle" font-size="12.5" font-weight="600" fill="var(--muted)">1-D chain → 3-D shape · now it works</text>
+              <text x="220" y="185" text-anchor="middle" font-size="14" font-weight="600" fill="var(--muted)">1-D chain → 3-D shape · now it works</text>
             </g>
           </svg>
         </div>
@@ -357,7 +358,7 @@
           <p>known patterns</p>
         </div>
         <div class="step">
-          <div class="badge" style="background:var(--g-red)">2</div>
+          <div class="badge" style="background:var(--g-yellow); color:#202124">2</div>
           <h3>Reason about the parts</h3>
           <p>the <b>Evoformer</b></p>
         </div>
@@ -390,7 +391,7 @@
             <path d="M74 164 C 104 94, 164 214, 199 144 S 254 104, 239 174 S 154 224, 124 189 S 74 209, 74 164 Z"
                   fill="none" stroke="var(--g-blue)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 5" opacity="0.9"/>
             <!-- legend -->
-            <g font-size="13" font-weight="600">
+            <g font-size="15" font-weight="600">
               <rect x="70" y="255" width="16" height="6" rx="3" fill="var(--g-green)"/>
               <text x="94" y="261" fill="var(--muted)">experiment</text>
               <rect x="205" y="255" width="16" height="6" rx="3" fill="var(--g-blue)"/>
@@ -420,7 +421,7 @@
         </div>
       </div>
       <div class="chips rise" style="margin-top:22px; justify-content:center;">
-        <span class="chip"><span class="k" style="background:var(--g-red)"></span>Disease research</span>
+        <span class="chip"><span class="k" style="background:var(--g-yellow)"></span>Disease research</span>
         <span class="chip"><span class="k" style="background:var(--g-blue)"></span>Drug discovery</span>
       </div>
       <p class="lead rise" style="margin-top:18px; text-align:center; max-width:none; font-weight:700;">AI → science's hardest problems.</p>
